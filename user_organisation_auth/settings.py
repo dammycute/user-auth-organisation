@@ -32,7 +32,7 @@ DEBUG = True
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'environmental-kellsie-htcode-bb2d409c.koyeb.app']
 
 
 # Application definition
