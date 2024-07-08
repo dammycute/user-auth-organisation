@@ -3,13 +3,13 @@ services:
     type: web
     description: "Django application"
     github:
-      repository: dammycute/user-auth-organisation
+      repository: dammycute/user_organisation_auth
       branch: main  # Adjust branch name as necessary
     run_command: |
       pip install -r requirements.txt
       python manage.py migrate
       python manage.py collectstatic --noinput
-      gunicorn --bind 0.0.0.0:8000 user-auth-organisation.wsgi:application
+      gunicorn --bind 0.0.0.0:8000 user_organisation_auth.wsgi:application
     env:
       - name: DJANGO_SETTINGS_MODULE
-        value: "user-auth-organisation.settings"
+        value: "user_organisation_auth.settings"
