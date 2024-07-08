@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv( 'SECRET_KEY' )
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 CORS_ALLOW_ALL_ORIGINS = True
 
 
@@ -111,14 +111,21 @@ WSGI_APPLICATION = 'user_organisation_auth.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',  
+#         'USER': os.getenv('NAME'),  
+#         'PASSWORD': os.getenv( 'PASSWORD' ),  
+#         'HOST': os.getenv('HOST'),  
+#         'PORT': '5432',  
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',  
-        'USER': os.getenv('NAME'),  
-        'PASSWORD': os.getenv( 'PASSWORD' ),  
-        'HOST': os.getenv('HOST'),  
-        'PORT': '5432',  
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
