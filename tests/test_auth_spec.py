@@ -7,6 +7,10 @@ class AuthEndToEndTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
 
+    def tearDown(self):
+        User.objects.all().delete()
+        Organisation.objects.all().delete()
+
     def test_register_user_successfully(self):
         url = reverse('register')
         data = {
@@ -23,7 +27,7 @@ class AuthEndToEndTestCase(TestCase):
         self.assertIn('accessToken', response.data['data'])
         self.assertIn('user', response.data['data'])
         
-        # To check if the default organisation was created
+        # Validate the user and organisation in the database
         user = User.objects.get(email='john@example.com')
         org = Organisation.objects.get(name="John's Organisation")
         self.assertIn(user, org.users.all())
@@ -37,8 +41,11 @@ class AuthEndToEndTestCase(TestCase):
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, 400)
+        
+        # Assert errors
         self.assertIn('errors', response.data)
-        self.assertTrue(any('lastName' in error['field'] for error in response.data['errors']))
+        self.assertIn('lastName', response.data['errors'])
+        self.assertEqual(response.data['errors']['lastName'][0].code, 'required')
 
     def test_register_user_duplicate_email(self):
         # First registration
@@ -56,14 +63,17 @@ class AuthEndToEndTestCase(TestCase):
         data['firstName'] = "Jane"
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, 400)
+        
+        # Assert errors
         self.assertIn('errors', response.data)
-        self.assertTrue(any('email' in error['field'] for error in response.data['errors']))
+        self.assertIn('email', response.data['errors'])
+        self.assertEqual(response.data['errors']['email'][0].code, 'unique')
 
     def test_login_user_successfully(self):
         # Register a user first
         self.test_register_user_successfully()
 
-        # This is trying to login
+        # Login
         url = reverse('login')
         data = {
             "email": "john@example.com",

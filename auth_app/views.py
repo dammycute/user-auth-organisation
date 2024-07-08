@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, views
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
@@ -142,3 +142,25 @@ class AddUserToOrganisationView(generics.GenericAPIView):
             return Response({"message": "You don't have permission to add users to this organisation"}, status=status.HTTP_403_FORBIDDEN)
         except Organisation.DoesNotExist:
             return Response({"message": "Organisation not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        
+
+class HomeApi(views.APIView):
+    def get(self, request, *args, **kwargs):
+        """
+        Return a JSON response listing available endpoints.
+
+        This endpoint provides a list of available endpoints in the API.
+        """
+        endpoints = {
+            "message": "Welcome to the home page",
+            "endpoints": [
+                {"url": "/auth/register/", "name": "register"},
+                {"url": "/auth/login/", "name": "login"},
+                {"url": "/api/users/<str:userId>/", "name": "user_detail"},
+                {"url": "/api/organisations/", "name": "organisation_list"},
+                {"url": "/api/organisations/<str:orgId>/", "name": "organisation_detail"},
+                {"url": "/api/organisations/<str:orgId>/add_user/", "name": "add_user_to_org"},
+            ]
+        }
+        return Response(endpoints, status=status.HTTP_200_OK)

@@ -29,8 +29,10 @@ SECRET_KEY = os.getenv( 'SECRET_KEY' )
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+CORS_ALLOW_ALL_ORIGINS = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -45,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'auth_app',
-    'test',
+    'tests',
 ]
 
 REST_FRAMEWORK = {
@@ -79,7 +81,6 @@ MIDDLEWARE = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 AUTH_USER_MODEL = 'auth_app.User'
 

@@ -21,7 +21,7 @@ class TokenGenerationTestCase(TestCase):
         self.assertAlmostEqual(
             access_token['exp'] - access_token['iat'],
             timedelta(minutes=60).total_seconds(),
-            delta=1  # Allowing 1 second difference because of any potential execution time
+            delta=1  
         )
 
         # Test for user detail in token
