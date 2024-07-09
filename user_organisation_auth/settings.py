@@ -111,24 +111,24 @@ WSGI_APPLICATION = 'user_organisation_auth.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',  
-        'USER': os.getenv('NAME'),  
+        'NAME': os.getenv('NAME'),  
+        'USER': os.getenv('USER'),  
         'PASSWORD': os.getenv( 'PASSWORD' ),  
         'HOST': os.getenv('HOST'),  
         'PORT': '5432',  
     }
-}"""
+}
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
  }
-
+"""
 # user= password=[YOUR-PASSWORD] host= port= dbname=
 
 # Password validation
